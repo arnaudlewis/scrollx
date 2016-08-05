@@ -42,9 +42,7 @@ const Property = {
   Top: 'top',
   Left: 'left',
   Bottom: 'bottom',
-  Right: 'right',
-  GrowthX: 'growthX',
-  GrowthY: 'growthY'
+  Right: 'right'
 }
 
 const Timing = {
@@ -163,28 +161,23 @@ function buildProp(from, to) {
   return {'from': from, 'to': to}
 }
 
-function compute(animationSelector) {
-  window.scrollY = window.scrollY
-  const filmHeight = filmDuration()
+function compute() {
   //computedValue With Dom Ref
   const computed = analyseDOM()
   //convert relative percents with px value of the total film
   const convertedScenes = convertScenes(computed)
   //change height property of the film in the DOM
-  document.querySelector(animationSelector).style.height = `${String(filmHeight)}px`
   run(convertedScenes, computed)
 }
 
-function setup(animationSelector, options) {
+function setup(animationNode, options) {
   //one time actions
   //~~~~~~~~~~~~~~~~~~~
   scenes = options
-
-  compute(animationSelector)
+  compute()
   //reset calculations if window size has changed
   window.addEventListener('resize', compute)
-  //random moves for decor items
-  randomMoves()
+  myAnimation.style.height = `${String(filmDuration())}px`
 }
 
 function analyseDOM() {
@@ -284,14 +277,6 @@ function setCssProperties(node, properties) {
   if(properties[Property.Left]) node.style.left = `${properties[Property.Left]}px`
   if(properties[Property.Bottom]) node.style.bottom = `${properties[Property.Bottom]}px`
   if(properties[Property.Right]) node.style.right = `${properties[Property.Right]}px`
-  if(properties[Property.GrowthX]) {
-    node.style.left = `${properties[Property.GrowthX]}px`
-    node.style.right = `${properties[Property.GrowthX]}px`
-  }
-  if(properties[Property.GrowthY]) {
-    node.style.top = `${properties[Property.GrowthY]}px`
-    node.style.bottom = `${properties[Property.GrowthY]}px`
-  }
 }
 
 function animateElements(convertedScenes, computed) {
@@ -312,7 +297,4 @@ function run(convertedScenes, computed) {
 }
 
 
-export default {
-  init: setup,
-  duration: filmDuration
-}
+export const scrollX = setup

@@ -1,4 +1,6 @@
-options = [
+import scrollX from 'engine'
+
+const options = [
     {
       'key': 'scene1',
       'wrapper' : '#scene1',
@@ -560,4 +562,7 @@ options = [
         }
       ]
     }
-  ]
+]
+
+const animationNode = document.querySelector('#my-animation')
+scrollX.init(animationNode, options)
