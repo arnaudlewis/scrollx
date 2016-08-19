@@ -210,9 +210,9 @@ function buildProp(from, to) {
   return { 'from': from, 'to': to };
 }
 
-function compute(scenes) {
+function compute(scenes, animationNode) {
   //computedValue With Dom Ref
-  var computed = analyseDOM(scenes);
+  var computed = analyseDOM(scenes, animationNode);
   //convert relative percents with px value of the total film
   var convertedScenes = convertScenes(scenes, computed);
   //change height property of the film in the DOM
@@ -223,15 +223,15 @@ function setup(animationNode, options) {
   //one time actions
   //~~~~~~~~~~~~~~~~~~~
   var scenes = options;
-  compute(scenes);
+  compute(scenes, animationNode);
   //reset calculations if window size has changed
   window.addEventListener('resize', compute);
   animationNode.style.height = String(filmDuration(scenes)) + 'px';
 }
 
-function analyseDOM(scenes) {
+function analyseDOM(scenes, animationNode) {
   return scenes.reduce(function (sceneAcc, s) {
-    var scene = _dom.DOM.querySelector(s.wrapper);
+    var scene = _dom.DOM.querySelector(s.wrapper, animationNode);
     var animations = s.animations.reduce(function (animAcc, a) {
       var animation = _dom.DOM.querySelector(a.selector, scene);
       var computedAnim = {};
