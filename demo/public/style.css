@@ -1,0 +1,29 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#my-animation {
+  height: 100vh;
+  width: 100%;
+}
+
+#my-animation .scene {
+  height: 100vh;
+  position: fixed;
+  width: 100%;
+}
+
+#my-animation #first-step {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #c8d4ff;
+}
+
+#my-animation #first-step .title {
+  font-size: 50px;
+  color: black;
+  margin: auto;
+  position: absolute;
+}

@@ -1,0 +1,38 @@
+{
+  "name": "scrollx",
+  "version": "1.0.0",
+  "description": "scroll animation engine",
+  "main": "scrollx.js",
+  "scripts": {
+    "start": "npm run build",
+    "watch": "babel lib/scrollx.js --watch --out-file ./scrollx.js",
+    "build": "babel ./lib/ -d .",
+    "sample": "browserify -t [babelify] ./demo/src/app.js -d > ./demo/public/app.js",
+    "watch-sample": "watchify -t [babelify] ./demo/src/app.js -o ./demo/public/app.js & npm run watch",
+    "browserify": "^13.0.1",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arnaudlewis/scrollxJS.git"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.11.4",
+    "babel-core": "^6.10.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "babelify": "^7.3.0",
+    "browserify": "^13.1.0",
+    "watchify": "^3.7.0"
+  },
+  "keywords": [
+    "scroll",
+    "animation"
+  ],
+  "author": "Arnaud Lewis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arnaudlewis/scrollxJS/issues"
+  },
+  "homepage": "https://github.com/arnaudlewis/scrollxJS#readme"
+}
