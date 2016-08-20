@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/arnaudlewis/scrollxJS.git"
+    "url": "git+https://github.com/arnaudlewis/scrollx.git"
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",
@@ -32,7 +32,7 @@
   "author": "Arnaud Lewis",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/arnaudlewis/scrollxJS/issues"
+    "url": "https://github.com/arnaudlewis/scrollx/issues"
   },
-  "homepage": "https://github.com/arnaudlewis/scrollxJS#readme"
+  "homepage": "https://github.com/arnaudlewis/scrollx#readme"
 }

@@ -19,7 +19,18 @@ var options = [{
       'duration': '100%',
       'properties': {
         'translateY': { 'from': '0%', 'to': '-100%' },
-        'opacity': { 'from': 1, 'to': 0 }
+        'color': { 'from': (0, _scrollx.Color)(0, 0, 0, 1), 'to': (0, _scrollx.Color)(255, 255, 255, 1) }
+      }
+    }]
+  }, { // title
+    'key': 'titleFadeIn',
+    'selector': '.title2',
+    'steps': [{
+      'start': '0%',
+      'duration': '100%',
+      'properties': {
+        'translateY': { 'from': '100%', 'to': '0%' },
+        'opacity': { 'from': 0, 'to': 1 }
       }
     }]
   }]
@@ -34,6 +45,7 @@ var animationNode = document.querySelector('#my-animation');
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.Color = undefined;
 
 var _json = require('../utils/json');
 
@@ -340,6 +352,7 @@ function run(convertedScenes, computed) {
 }
 
 exports.default = setup;
+exports.Color = Color;
 
 },{"../utils/dom":3,"../utils/frame":4,"../utils/json":5}],3:[function(require,module,exports){
 "use strict";

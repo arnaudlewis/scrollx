@@ -21,7 +21,7 @@ body {
   background-color: #c8d4ff;
 }
 
-#my-animation #first-step .title {
+#my-animation #first-step h1 {
   font-size: 50px;
   color: black;
   margin: auto;

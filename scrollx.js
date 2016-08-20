@@ -3,6 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.Color = undefined;
 
 var _json = require('../utils/json');
 
@@ -309,3 +310,4 @@ function run(convertedScenes, computed) {
 }
 
 exports.default = setup;
+exports.Color = Color;

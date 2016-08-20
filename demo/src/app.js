@@ -1,4 +1,4 @@
-import scrollx from '../../lib/scrollx'
+import scrollx, { Color } from '../../lib/scrollx'
 
 const options = [
   {
@@ -15,7 +15,21 @@ const options = [
             'duration': '100%',
             'properties': {
               'translateY': {'from': '0%', 'to': '-100%'},
-              'opacity': {'from': 1, 'to': 0}
+              'color': {'from': Color(0, 0, 0, 1), 'to': Color(255, 255, 255, 1)}
+            }
+          }
+        ]
+      },
+      { // title
+        'key': 'titleFadeIn',
+        'selector': '.title2',
+        'steps': [
+          {
+            'start': '0%',
+            'duration': '100%',
+            'properties': {
+              'translateY': {'from': '100%', 'to': '0%'},
+              'opacity': {'from': 0, 'to': 1}
             }
           }
         ]
