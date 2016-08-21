@@ -34,6 +34,33 @@ var options = [{
       }
     }]
   }]
+}, {
+  'key': 'second-step',
+  'wrapper': '#second-step',
+  'timeFactor': 1,
+  'animations': [{ // title
+    'key': 'titleFadeOut',
+    'selector': '.title',
+    'steps': [{
+      'start': '0%',
+      'duration': '100%',
+      'properties': {
+        'translateY': { 'from': '0%', 'to': '-100%' },
+        'color': { 'from': (0, _scrollx.Color)(0, 0, 0, 1), 'to': (0, _scrollx.Color)(255, 255, 255, 1) }
+      }
+    }]
+  }, { // title
+    'key': 'titleFadeIn',
+    'selector': '.title2',
+    'steps': [{
+      'start': '0%',
+      'duration': '100%',
+      'properties': {
+        'translateY': { 'from': '100%', 'to': '0%' },
+        'opacity': { 'from': 0, 'to': 1 }
+      }
+    }]
+  }]
 }];
 
 var animationNode = document.querySelector('#my-animation');
@@ -234,14 +261,25 @@ function compute(scenes, animationNode) {
   //convert relative percents with px value of the total film
   var convertedScenes = convertScenes(scenes, computed);
 
-  var animBounds = animationNode.getBoundingClientRect();
   var duration = filmDuration(convertedScenes, animationNode);
   animationNode.style.height = String(duration) + 'px';
-  animOffset = animBounds.top;
+  animOffset = getAnimationOffset(animationNode);
   animHeight = duration;
 
   //change height property of the film in the DOM
   run(convertedScenes, computed);
+}
+
+function getAnimationOffset(elem) {
+  // crossbrowser version
+  var box = elem.getBoundingClientRect();
+  var body = document.body;
+  var docEl = document.documentElement;
+
+  var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+  var clientTop = docEl.clientTop || body.clientTop || 0;
+
+  return Math.round(box.top + scrollTop - clientTop);
 }
 
 function setup(animationNode, options) {
@@ -360,8 +398,8 @@ function run(convertedScenes, computed) {
   _frame.Frame.requestAnimationFrame()(function () {
     if (scrollTop() >= 0 && scrollTop() <= animHeight) {
       animateElements(convertedScenes, computed);
-      run(convertedScenes, computed);
     }
+    run(convertedScenes, computed);
   });
 }
 

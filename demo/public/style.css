@@ -8,11 +8,15 @@ body {
 }
 
 #my-animation .scene {
-  height: 200vh;
+  height: 100vh;
   position: fixed;
   width: 100%;
-  padding-bottom: 100vh;
   box-sizing: border-box;
+}
+
+#my-animation .scene:last-child {
+  height: 200vh;
+  padding-bottom: 100vh;
 }
 
 #my-animation #first-step {

@@ -192,14 +192,25 @@ function compute(scenes, animationNode) {
   //convert relative percents with px value of the total film
   var convertedScenes = convertScenes(scenes, computed);
 
-  var animBounds = animationNode.getBoundingClientRect();
   var duration = filmDuration(convertedScenes, animationNode);
   animationNode.style.height = String(duration) + 'px';
-  animOffset = animBounds.top;
+  animOffset = getAnimationOffset(animationNode);
   animHeight = duration;
 
   //change height property of the film in the DOM
   run(convertedScenes, computed);
+}
+
+function getAnimationOffset(elem) {
+  // crossbrowser version
+  var box = elem.getBoundingClientRect();
+  var body = document.body;
+  var docEl = document.documentElement;
+
+  var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+  var clientTop = docEl.clientTop || body.clientTop || 0;
+
+  return Math.round(box.top + scrollTop - clientTop);
 }
 
 function setup(animationNode, options) {
