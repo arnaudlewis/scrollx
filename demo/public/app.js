@@ -106,6 +106,12 @@ var Timing = {
 };
 var defaultTransition = Timing.EASE_IN_OUT;
 
+var animOffset = 0;
+var animHeight = 0;
+var scrollTop = function scrollTop() {
+  return window.scrollY - animOffset;
+};
+
 var Color = function Color(red, green, blue) {
   var opacity = arguments.length <= 3 || arguments[3] === undefined ? 1 : arguments[3];
 
@@ -114,11 +120,10 @@ var Color = function Color(red, green, blue) {
 
 function filmDuration(convertedScenes, animationNode) {
   //in PX
-  var outro = window.innerHeight;
   return convertedScenes.reduce(function (acc, scene) {
     var sceneHeight = _dom.DOM.querySelector(scene.wrapper, animationNode).clientHeight;
     return acc + scene.timeFactor * sceneHeight;
-  }, outro);
+  }, 0);
 }
 
 function getIndex(scenes, scene) {
@@ -229,7 +234,12 @@ function compute(scenes, animationNode) {
   //convert relative percents with px value of the total film
   var convertedScenes = convertScenes(scenes, computed);
 
-  animationNode.style.height = String(filmDuration(convertedScenes, animationNode)) + 'px';
+  var animBounds = animationNode.getBoundingClientRect();
+  var duration = filmDuration(convertedScenes, animationNode);
+  animationNode.style.height = String(duration) + 'px';
+  animOffset = animBounds.top;
+  animHeight = duration;
+
   //change height property of the film in the DOM
   run(convertedScenes, computed);
 }
@@ -260,7 +270,7 @@ function analyseDOM(scenes, animationNode) {
 
 function computeProperty(step, propValue) {
   var transitionFunc = step.transition || defaultTransition;
-  if (window.scrollY <= step.start) return propValue.from;else if (window.scrollY >= step.start + step.duration) return propValue.to;else return transitionFunc(window.scrollY - step.start, propValue.from, propValue.to - propValue.from, step.duration);
+  if (scrollTop() <= step.start) return propValue.from;else if (scrollTop() >= step.start + step.duration) return propValue.to;else return transitionFunc(scrollTop() - step.start, propValue.from, propValue.to - propValue.from, step.duration);
 }
 
 function computeColor(step, colorValue) {
@@ -304,7 +314,7 @@ function calcPropValue(step, property) {
 
 function getCurrentStep(steps) {
   var matchedStep = steps.find(function (step) {
-    return window.scrollY >= step.start && window.scrollY <= step.start + step.duration || step.start >= window.scrollY;
+    return scrollTop() >= step.start && scrollTop() <= step.start + step.duration || step.start >= scrollTop();
   });
   var matchedIndexOf = steps.indexOf(matchedStep);
   var matchedIndex = matchedIndexOf > -1 ? matchedIndexOf : steps.length - 1;
@@ -348,8 +358,10 @@ function animateElements(convertedScenes, computed) {
 
 function run(convertedScenes, computed) {
   _frame.Frame.requestAnimationFrame()(function () {
-    animateElements(convertedScenes, computed);
-    run(convertedScenes, computed);
+    if (scrollTop() >= 0 && scrollTop() <= animHeight) {
+      animateElements(convertedScenes, computed);
+      run(convertedScenes, computed);
+    }
   });
 }
 

@@ -4,14 +4,15 @@ body {
 }
 
 #my-animation {
-  height: 100vh;
   width: 100%;
 }
 
 #my-animation .scene {
-  height: 100vh;
+  height: 200vh;
   position: fixed;
   width: 100%;
+  padding-bottom: 100vh;
+  box-sizing: border-box;
 }
 
 #my-animation #first-step {
