@@ -1,6 +1,6 @@
 {
   "name": "scrollx",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "scroll animation engine",
   "main": "dist/scrollx.js",
   "scripts": {
