@@ -318,8 +318,8 @@ function run(convertedScenes, computed) {
   _frame.Frame.requestAnimationFrame()(function () {
     if (scrollTop() >= 0 && scrollTop() <= animHeight) {
       animateElements(convertedScenes, computed);
-      run(convertedScenes, computed);
     }
+    run(convertedScenes, computed);
   });
 }
 
