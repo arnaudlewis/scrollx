@@ -112,11 +112,12 @@ var Color = function Color(red, green, blue) {
   return { r: parseInt(red), g: parseInt(green), b: parseInt(blue), a: opacity };
 };
 
-function filmDuration(scenes) {
+function filmDuration(convertedScenes, animationNode) {
   //in PX
   var outro = window.innerHeight;
-  return scenes.reduce(function (acc, scene) {
-    return acc + scene.timeFactor * window.innerHeight;
+  return convertedScenes.reduce(function (acc, scene) {
+    var sceneHeight = _dom.DOM.querySelector(scene.wrapper, animationNode).clientHeight;
+    return acc + scene.timeFactor * sceneHeight;
   }, outro);
 }
 
@@ -227,6 +228,8 @@ function compute(scenes, animationNode) {
   var computed = analyseDOM(scenes, animationNode);
   //convert relative percents with px value of the total film
   var convertedScenes = convertScenes(scenes, computed);
+
+  animationNode.style.height = String(filmDuration(convertedScenes, animationNode)) + 'px';
   //change height property of the film in the DOM
   run(convertedScenes, computed);
 }
@@ -238,7 +241,6 @@ function setup(animationNode, options) {
   compute(scenes, animationNode);
   //reset calculations if window size has changed
   window.addEventListener('resize', compute);
-  animationNode.style.height = String(filmDuration(scenes)) + 'px';
 }
 
 function analyseDOM(scenes, animationNode) {
