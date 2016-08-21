@@ -47,11 +47,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Color = undefined;
 
-var _json = require('../utils/json');
+var _json = require('./utils/json');
 
-var _dom = require('../utils/dom');
+var _dom = require('./utils/dom');
 
-var _frame = require('../utils/frame');
+var _frame = require('./utils/frame');
 
 /* Transition functions
 -------------------------------------------------- */
@@ -356,7 +356,7 @@ function run(convertedScenes, computed) {
 exports.default = setup;
 exports.Color = Color;
 
-},{"../utils/dom":3,"../utils/frame":4,"../utils/json":5}],3:[function(require,module,exports){
+},{"./utils/dom":3,"./utils/frame":4,"./utils/json":5}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

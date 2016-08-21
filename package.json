@@ -1,11 +1,11 @@
 {
   "name": "scrollx",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "scroll animation engine",
   "main": "dist/scrollx.js",
   "scripts": {
     "start": "npm run build",
-    "watch": "babel lib/scrollx.js --watch --out-file ./dist/scrollx.js",
+    "watch": "babel lib/ --out-dir dist/ --watch",
     "build": "babel ./lib/ -d ./dist/",
     "sample": "browserify -t [babelify] ./demo/src/app.js -d > ./demo/public/app.js",
     "watch-sample": "watchify -t [babelify] ./demo/src/app.js -o ./demo/public/app.js & npm run watch",
