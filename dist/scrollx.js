@@ -76,11 +76,10 @@ var Color = function Color(red, green, blue) {
   return { r: parseInt(red), g: parseInt(green), b: parseInt(blue), a: opacity };
 };
 
-function filmDuration(convertedScenes, animationNode) {
+function filmDuration(convertedScenes, computed) {
   //in PX
   return convertedScenes.reduce(function (acc, scene) {
-    var sceneHeight = _dom.DOM.querySelector(scene.wrapper, animationNode).clientHeight;
-    return acc + scene.timeFactor * sceneHeight;
+    return acc + scene.timeFactor * computed[scene.key].duration;
   }, 0);
 }
 
@@ -88,28 +87,19 @@ function getIndex(scenes, scene) {
   return scenes.indexOf(scene);
 }
 
-function sceneStart(scenes, scene) {
+function sceneStart(scenes, scene, computed) {
   //in PX
   var startIndex = getIndex(scenes, scene);
   var previousScenes = scenes.slice(0, startIndex);
 
   return previousScenes.reduce(function (acc, s) {
-    return acc + s.timeFactor * window.innerHeight;
+    return acc + s.timeFactor * computed[s.key].duration;
   }, 0);
 }
 
-function sceneDuration(scene) {
-  //in PX
-  return scene.timeFactor * window.innerHeight;
-}
-
-function sceneEnd(scenes, scene) {
-  return sceneStart(scenes, scene) + sceneDuration(scene);
-}
-
-function animationStepStart(scenes, scene, step, animTimeFactor) {
+function animationStepStart(scenes, computed, scene, step, animTimeFactor) {
   // in px
-  var start = sceneStart(scenes, scene);
+  var start = sceneStart(scenes, scene, computed);
   return start + pixelsOfScene(step.start, animTimeFactor, Axis.Y);
 }
 
@@ -157,7 +147,7 @@ function convertAnimations(scenes, computed, scene, sceneIndex) {
 function convertAnimationSteps(scenes, computed, scene, sceneIndex, animation) {
   return animation.steps.map(function (step, index) {
     var timeF = negativePercent(step.start) ? scenes[sceneIndex - 1].timeFactor : scene.timeFactor;
-    var animStartHeight = animationStepStart(scenes, scene, step, timeF);
+    var animStartHeight = animationStepStart(scenes, computed, scene, step, timeF);
     var animDurationHeight = animationStepDuration(scene, step, scene.timeFactor);
     var updatedAnimation = _json.Json.merge(animation, { 'start': animStartHeight, 'duration': animDurationHeight });
     var properties = convertProperties(computed, scene, animation, step);
@@ -192,7 +182,7 @@ function compute(scenes, animationNode) {
   //convert relative percents with px value of the total film
   var convertedScenes = convertScenes(scenes, computed);
 
-  var duration = filmDuration(convertedScenes, animationNode);
+  var duration = filmDuration(convertedScenes, computed);
   animationNode.style.height = String(duration) + 'px';
   animOffset = getAnimationOffset(animationNode);
   animHeight = duration;
@@ -219,7 +209,9 @@ function setup(animationNode, options) {
   var scenes = options;
   compute(scenes, animationNode);
   //reset calculations if window size has changed
-  window.addEventListener('resize', compute);
+  window.addEventListener('resize', function (e) {
+    return compute(scenes, animationNode);
+  });
 }
 
 function analyseDOM(scenes, animationNode) {
@@ -232,7 +224,12 @@ function analyseDOM(scenes, animationNode) {
       return _json.Json.merge(animAcc, computedAnim);
     }, {});
     var computedScene = {};
-    computedScene[s.key] = { 'node': scene, 'start': sceneStart(scenes, s), 'animations': animations };
+    computedScene[s.key] = {
+      'node': scene,
+      'duration': scene.clientHeight,
+      'start': sceneStart(scenes, s, sceneAcc),
+      'animations': animations
+    };
     return _json.Json.merge(sceneAcc, computedScene);
   }, {});
 }
