@@ -5,7 +5,7 @@
   "main": "dist/scrollx.js",
   "scripts": {
     "start": "npm run build",
-    "build": "browserify -t [babelify] ./lib/scrollx.js -d > ./dist/scrollx.js",
+    "build": "browserify -t [babelify] ./lib/scrollx.js -o ./dist/scrollx.js",
     "prebuild": "mkdir -p ./dist",
     "prepublish": "npm run prebuild; npm run build;",
     "watch": "npm run prebuild; nodemon --watch ./lib --exec \"npm run build\""
