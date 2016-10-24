@@ -5,12 +5,10 @@
   "main": "dist/scrollx.js",
   "scripts": {
     "start": "npm run build",
-    "watch": "babel lib/ --out-dir dist/ --watch",
-    "build": "babel ./lib/ -d ./dist/",
-    "sample": "browserify -t [babelify] ./demo/src/app.js -d > ./demo/public/app.js",
-    "watch-sample": "watchify -t [babelify] ./demo/src/app.js -o ./demo/public/app.js & npm run watch",
-    "browserify": "^13.0.1",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "browserify -t [babelify] ./lib/scrollx.js -d > ./dist/scrollx.js",
+    "prebuild": "mkdir -p ./dist",
+    "prepublish": "npm run prebuild; npm run build;",
+    "watch": "npm run prebuild; nodemon --watch ./lib --exec \"npm run build\""
   },
   "repository": {
     "type": "git",

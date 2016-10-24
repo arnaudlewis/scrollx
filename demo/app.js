@@ -1,6 +1,4 @@
-import scrollx, { Color } from '../../lib/scrollx'
-
-const options = [
+var options = [
   {
     'key': 'first-step',
     'wrapper' : '#first-step',
@@ -15,7 +13,7 @@ const options = [
             'duration': '100%',
             'properties': {
               'translateY': {'from': '0%', 'to': '-100%'},
-              'color': {'from': Color(0, 0, 0, 1), 'to': Color(255, 255, 255, 1)}
+              'color': {'from': scrollx.Color(0, 0, 0, 1), 'to': scrollx.Color(255, 255, 255, 1)}
             }
           }
         ]
@@ -50,7 +48,7 @@ const options = [
             'duration': '100%',
             'properties': {
               'translateY': {'from': '0%', 'to': '-100%'},
-              'color': {'from': Color(0, 0, 0, 1), 'to': Color(255, 255, 255, 1)}
+              'color': {'from': scrollx.Color(0, 0, 0, 1), 'to': scrollx.Color(255, 255, 255, 1)}
             }
           }
         ]
@@ -73,5 +71,5 @@ const options = [
   }
 ]
 
-const animationNode = document.querySelector('#my-animation')
-scrollx(animationNode, options)
+var animationNode = document.querySelector('#my-animation')
+scrollx.init(animationNode, options)

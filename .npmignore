@@ -71,6 +71,3 @@ jspm_packages
 
 # Output of 'npm pack'
 *.tgz
-
-# compiled sources
-dist/
