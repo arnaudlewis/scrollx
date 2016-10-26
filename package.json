@@ -1,15 +1,14 @@
 {
   "name": "scrollx",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "scroll animation engine",
   "main": "dist/scrollx.js",
   "scripts": {
     "start": "npm run build",
-    "watch": "babel lib/ --out-dir dist/ --watch",
+    "watch": "npm run prebuild; nodemon --watch ./lib --exec \"npm run build\"",
     "build": "babel ./lib/ -d ./dist/",
     "prebuild": "mkdir -p ./dist",
     "prepublish": "npm run prebuild; npm run build;",
-    "watch": "npm run prebuild; nodemon --watch ./lib --exec \"npm run build\"",
     "lint": "eslint lib/**/*.js",
     "test": "npm run lint"
   },
