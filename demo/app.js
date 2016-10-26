@@ -13,7 +13,7 @@ var options = [
             'duration': '100%',
             transition: scrollx.Timing.LINEAR,
             'properties': {
-              'translateY': {'from': 0, 'to': -100, 'unit': 'vh'},
+              'rotate': {'from': 0, 'to': 50},
               'color': {'from': scrollx.Color(0, 0, 0, 1), 'to': scrollx.Color(255, 255, 255, 1)}
             }
           }
