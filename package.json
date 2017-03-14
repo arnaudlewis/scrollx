@@ -2,7 +2,7 @@
   "name": "scrollx",
   "version": "2.2.0",
   "description": "scroll animation engine",
-  "main": "dist/scrollx.js",
+  "main": "dist/scrollx.min.js",
   "scripts": {
     "start": "npm run build",
     "watch": "npm run prebuild; nodemon --watch ./lib --exec \"npm run dev\"",
